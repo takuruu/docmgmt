@@ -38,7 +38,25 @@ new_path = rename_file(Path("scan001.pdf"), new_name)
 | `docmgmt.extraction` | Textextraktion aus Dateien (inkl. Bild-OCR via Mistral) |
 | `docmgmt.namer` | `DocumentNamer`: LLM-Namensvorschlag via Mistral Chat API |
 | `docmgmt.rename` | Umbenennen mit Kollisionsschutz und `dry_run` |
+| `docmgmt.batch` | Batch-Umbenennung: Ordner scannen, Vorschläge sammeln, anwenden |
 | `docmgmt.client` | Mistral-Client-Factory (`MISTRAL_API_KEY`) |
+
+## Batch-Umbenennung
+
+```python
+from docmgmt.client import create_mistral_client
+from docmgmt.batch import rename_batch
+
+client = create_mistral_client()
+
+# Dry-Run: nur Vorschläge sammeln
+result = rename_batch(client_namer, "~/Dokumente/Scans")
+for s in result.needs_rename:
+    print(s.source.name, "->", s.suggested_filename)
+
+# Anwenden (überspringt Ziele, die bereits existieren)
+result = rename_batch(client_namer, "~/Dokumente/Scans", apply=True)
+```
 
 ## Tests
 
