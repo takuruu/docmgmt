@@ -13,16 +13,18 @@ nicht auf Veröffentlichung/Support für Dritte.
 - LLM-gestützte Analyse (Mistral Chat API + OCR)
 - Lokale Dateien bleiben lokale Dateien – das DMS verwaltet, es verwahrt nicht in einer Cloud
 - Keine zerstörerischen Operationen ohne Sicherung (dry-run, Kollisionsschutz)
+- **Suche als Kernstück:** integrierte Dokumente müssen schnell auffindbar sein (Suchindex); Import mit automatischem Umbenennen und Batch-Umbenennung unterstützen das
 
 ## Kernfunktionen (Zielzustand)
 
 1. **Import & Extraktion** – Text aus TXT/MD/CSV/JSON, PDF, DOCX, Bildern (OCR)
 2. **Dateibezeichner** – LLM-Namensvorschlag + sicheres Umbenennen ✅ *(umgesetzt: `DocumentNamer`, `rename_file`)*
 3. **Batch-Umbenennung** – Ordner rekursiv scannen, Vorschläge sammeln, halb-/vollautomatisch anwenden
-4. **Tags & Metadaten** – Kategorien, Datum, Absender etc. per LLM extrahieren
-5. **Suchindex** – lokale Datenbank (z.B. SQLite) mit durchsuchbarem Dokumentindex
-6. **CLI** – praktischer Einstieg für den Alltag (`docmgmt scan <ordner>`)
-7. **GUI** – grafische Oberfläche als GTK-4-App (PyGObject), passend zur XFCE-Desktop-Umgebung; Fensterstruktur: Toolbar + Dateiliste + Detailbereich, erster GUI-Dialog: Batch-Umbenennung (Vorschlag pro Datei, übernehmen/verwerfen, Sammel-Aktion)
+4. **Suchindex & Suche** – lokales Herzstück: integrierte Dokumente schnell finden (SQLite-Volltextindex)
+5. **Import mit Auto-Umbenennung** – Importfunktion, die Dateien automatisch analysiert, benennt und indexiert
+6. **Tags & Metadaten** – Korrespondent (mit wem), Datum etc. per LLM extrahieren; sortierte Ansichten nach Korrespondent und Datum
+7. **CLI** – praktischer Einstieg für den Alltag (`docmgmt scan <ordner>`)
+8. **GUI** – grafische Oberfläche als GTK-4-App (PyGObject), passend zur XFCE-Desktop-Umgebung; Fensterstruktur: Toolbar + Dateiliste + Detailbereich, erster GUI-Dialog: Batch-Umbenennung (Vorschlag pro Datei, übernehmen/verwerfen, Sammel-Aktion); später Suchleiste und sortierte Ansichten (Korrespondent/Datum)
 
 ## Roadmap (Reihenfolge)
 
@@ -30,10 +32,11 @@ nicht auf Veröffentlichung/Support für Dritte.
 |---|---|---|
 | 1 | Dateibezeichner (LLM-Namensvorschlag, Umbenennen) | ✅ fertig (PR #1) |
 | 2 | Batch-Umbenennung (Ordner scannen, Vorschau, Anwendung) | 🔜 als Nächstes |
-| 3 | Tags & Metadaten-Extraktion | geplant |
-| 4 | Suchindex (SQLite) | geplant |
-| 5 | CLI (`docmgmt scan <ordner>`, `docmgmt rename --dry-run`) | geplant |
-| 6 | GTK-4-GUI (PyGObject) für XFCE | geplant |
+| 3 | Import mit Auto-Umbenennung (analysieren → benennen → indexieren) | geplant |
+| 4 | Suchindex & Suche (SQLite-Volltextindex, schnelles Finden) | geplant (Kernstück) |
+| 5 | Tags & Metadaten (Korrespondent, Datum; sortierte Ansichten) | geplant (Feinheiten, später) |
+| 6 | CLI (`docmgmt scan <ordner>`, `docmgmt rename --dry-run`) | geplant |
+| 7 | GTK-4-GUI (PyGObject) für XFCE | geplant |
 
 ## Rahmenbedingungen
 
