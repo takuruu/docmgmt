@@ -1,4 +1,3 @@
-from pathlib import Path
 
 from docmgmt.batch import (
     apply_suggestions,
@@ -7,8 +6,13 @@ from docmgmt.batch import (
     scan_directory,
     RenameSuggestion,
 )
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+
 from docmgmt.namer import DocumentNamer
-from tests.test_namer import FakeClient
+from test_namer import FakeClient
 
 
 def make_namer(content="Rechnung Strom 2024"):
