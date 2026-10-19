@@ -21,7 +21,8 @@ nicht auf Veröffentlichung/Support für Dritte.
 3. **Batch-Umbenennung** – Ordner rekursiv scannen, Vorschläge sammeln, halb-/vollautomatisch anwenden
 4. **Tags & Metadaten** – Kategorien, Datum, Absender etc. per LLM extrahieren
 5. **Suchindex** – lokale Datenbank (z.B. SQLite) mit durchsuchbarem Dokumentindex
-6. **CLI / Bedienoberfläche** – praktischer Einstieg für den Alltag
+6. **CLI** – praktischer Einstieg für den Alltag (`docmgmt scan <ordner>`)
+7. **GUI** – grafische Oberfläche als GTK-4-App (PyGObject), passend zur XFCE-Desktop-Umgebung; Fensterstruktur: Toolbar + Dateiliste + Detailbereich, erster GUI-Dialog: Batch-Umbenennung (Vorschlag pro Datei, übernehmen/verwerfen, Sammel-Aktion)
 
 ## Roadmap (Reihenfolge)
 
@@ -32,6 +33,11 @@ nicht auf Veröffentlichung/Support für Dritte.
 | 3 | Tags & Metadaten-Extraktion | geplant |
 | 4 | Suchindex (SQLite) | geplant |
 | 5 | CLI (`docmgmt scan <ordner>`, `docmgmt rename --dry-run`) | geplant |
+| 6 | GTK-4-GUI (PyGObject) für XFCE | geplant |
+
+## Rahmenbedingungen
+
+- **GUI:** GTK 4 mit PyGObject (XFCE-Desktop; bewusst kein Qt/Tkinter/libadwaita). Die Bibliothek bleibt UI-unabhängig – GUI und CLI sind nur Bedenschichten darüber.
 
 ## Nicht-Ziele
 
