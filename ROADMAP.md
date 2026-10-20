@@ -31,7 +31,8 @@ nicht auf Veröffentlichung/Support für Dritte.
 | # | Feature | Status |
 |---|---|---|
 | 1 | Dateibezeichner (LLM-Namensvorschlag, Umbenennen) | ✅ fertig (PR #1) |
-| 2 | Batch-Umbenennung (Ordner scannen, Vorschau, Anwendung) | 🔜 als Nächstes |
+| 2 | Batch-Umbenennung (Ordner scannen, Vorschau, Anwendung) | ✅ fertig (PR #2) |
+| 3 | Import mit Auto-Umbenennung (analysieren → benennen → indexieren) | 🔜 in Arbeit |
 | 3 | Import mit Auto-Umbenennung (analysieren → benennen → indexieren) | geplant |
 | 4 | Suchindex & Suche (SQLite-Volltextindex, schnelles Finden) | geplant (Kernstück) |
 | 5 | Tags & Metadaten (Korrespondent, Datum; sortierte Ansichten) | geplant (Feinheiten, später) |

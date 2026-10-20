@@ -7,6 +7,8 @@ from docmgmt.batch import (
     rename_batch,
     scan_directory,
 )
+from docmgmt.importer import Importer, ImportResult
+from docmgmt.index import Document, SearchIndex
 
 __all__ = [
     "DocumentNamer",
@@ -16,4 +18,8 @@ __all__ = [
     "collect_suggestions",
     "rename_batch",
     "scan_directory",
+    "Importer",
+    "ImportResult",
+    "Document",
+    "SearchIndex",
 ]
