@@ -35,7 +35,7 @@ nicht auf Veröffentlichung/Support für Dritte.
 | 3 | Import mit Auto-Umbenennung (analysieren → benennen → indexieren) | 🔜 in Arbeit |
 | 3 | Import mit Auto-Umbenennung (analysieren → benennen → indexieren) | geplant |
 | 4 | Suchindex & Suche (SQLite-Volltextindex, schnelles Finden) | geplant (Kernstück) |
-| 5 | Tags & Metadaten (Korrespondent, Datum; sortierte Ansichten) | geplant (Feinheiten, später) |
+| 5 | Tags & Metadaten (Korrespondent, Datum; sortierte Ansichten) | 🟣 in Arbeit (Extraktion via Document-Annotation, im Index gespeichert, GUI zeigt sie; sortierte Ansichten folgen) |
 | 6 | CLI (`docmgmt scan <ordner>`, `docmgmt rename --dry-run`) | geplant |
 | 7 | GTK-4-GUI (PyGObject) für XFCE | 🟣 in Arbeit (Basis: Toolbar + Dateiliste + Detail, Batch-Dialog, Suche) |
 

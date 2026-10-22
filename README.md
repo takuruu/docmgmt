@@ -81,6 +81,24 @@ with SearchIndex("~/.docmgmt/index.db") as index:
         print(hit.filename, hit.path)
 ```
 
+## Metadaten: Datum, Korrespondent, Dokumentart
+
+`docmgmt.metadata` extrahiert pro Dokument Datum (ISO), Korrespondenten und
+Dokumentart – für Bilder/PDFs über die Mistral-OCR-Document-Annotation
+(`document_annotation_format`, JSON-Schema), für Textformate über den Chat-
+Endpoint mit JSON-Ausgabe. Der Import speichert die Metadaten im Suchindex,
+der GUI-Detailbereich zeigt sie an:
+
+```python
+from docmgmt.metadata import extract_metadata
+
+meta = extract_metadata(Path("scan001.pdf"), client)
+print(meta.date, meta.correspondent, meta.document_type)
+
+# Suche mit Filter:
+index.search("rechnung", correspondent="Stadtwerke", date_from="2024-01-01")
+```
+
 ## GUI (GTK 4 / PyGObject)
 
 Grafische Oberfläche für XFCE (GTK 4, kein libadwaita):

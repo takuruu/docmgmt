@@ -31,9 +31,20 @@ class DocumentRow(Gtk.Box):
         self.doc = doc
         name = Gtk.Label(label=doc.filename, halign=Gtk.Align.START,
                          ellipsize=3, xalign=0)
+        self.append(name)
+        meta_parts = []
+        if getattr(doc, "date", None):
+            meta_parts.append(doc.date)
+        if getattr(doc, "correspondent", None):
+            meta_parts.append(doc.correspondent)
+        if getattr(doc, "document_type", None):
+            meta_parts.append(doc.document_type)
+        if meta_parts:
+            meta = Gtk.Label(label="  ·  ".join(meta_parts), halign=Gtk.Align.START,
+                             ellipsize=3, xalign=0, css_classes=["caption", "dim-label"])
+            self.append(meta)
         path = Gtk.Label(label=doc.path, halign=Gtk.Align.START,
                          ellipsize=3, xalign=0, css_classes=["caption", "dim-label"])
-        self.append(name)
         self.append(path)
 
 
@@ -208,10 +219,20 @@ class MainWindow(Gtk.ApplicationWindow):
             return
         doc = self.documents[row.get_index()]
         excerpt = doc.content[:1500] if doc.content else "(kein Text)"
-        self.detail.set_markup(
-            f"<b>{GLib.markup_escape_text(doc.filename)}</b>\n\n"
-            f"{GLib.markup_escape_text(doc.path)}\n\n"
-            f"{GLib.markup_escape_text(excerpt)}")
+        meta_lines = []
+        if getattr(doc, "date", None):
+            meta_lines.append(f"Datum: {doc.date}")
+        if getattr(doc, "correspondent", None):
+            meta_lines.append(f"Korrespondent: {doc.correspondent}")
+        if getattr(doc, "document_type", None):
+            meta_lines.append(f"Art: {doc.document_type}")
+        meta_block = "\n".join(meta_lines)
+        parts = [f"<b>{GLib.markup_escape_text(doc.filename)}</b>"]
+        if meta_block:
+            parts.append(GLib.markup_escape_text(meta_block))
+        parts.append(GLib.markup_escape_text(doc.path))
+        parts.append(GLib.markup_escape_text(excerpt))
+        self.detail.set_markup("\n\n".join(parts))
 
     def _pick_folder(self, title: str, callback) -> None:
         dialog = Gtk.FileChooserNative(
