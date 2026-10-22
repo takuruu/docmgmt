@@ -39,6 +39,8 @@ new_path = rename_file(Path("scan001.pdf"), new_name)
 | `docmgmt.namer` | `DocumentNamer`: LLM-Namensvorschlag via Mistral Chat API |
 | `docmgmt.rename` | Umbenennen mit Kollisionsschutz und `dry_run` |
 | `docmgmt.batch` | Batch-Umbenennung: Ordner scannen, Vorschläge sammeln, anwenden |
+| `docmgmt.index` | `SearchIndex`: lokaler SQLite-Volltextindex (FTS5) mit Suche |
+| `docmgmt.importer` | `Importer`: Datei analysieren, per LLM umbenennen, indexieren |
 | `docmgmt.client` | Mistral-Client-Factory (`MISTRAL_API_KEY`) |
 
 ## Batch-Umbenennung
@@ -56,6 +58,27 @@ for s in result.needs_rename:
 
 # Anwenden (überspringt Ziele, die bereits existieren)
 result = rename_batch(client_namer, "~/Dokumente/Scans", apply=True)
+```
+
+## Import mit Auto-Umbenennung & Suche
+
+```python
+from docmgmt.client import create_mistral_client
+from docmgmt.importer import Importer
+from docmgmt.index import SearchIndex
+from docmgmt.namer import DocumentNamer
+
+client = create_mistral_client()
+namer = DocumentNamer(client)
+
+with SearchIndex("~/.docmgmt/index.db") as index:
+    importer = Importer(namer, index)
+    # Datei analysieren, LLM-Namen vergeben, in Index aufnehmen:
+    importer.import_file(Path("scan001.pdf"), target_dir=Path("~/Dokumente/archiv"))
+
+    # Volltextsuche über Dateinamen und Inhalte:
+    for hit in index.search("stromrechnung 2024"):
+        print(hit.filename, hit.path)
 ```
 
 ## Tests
