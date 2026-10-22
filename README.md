@@ -81,6 +81,23 @@ with SearchIndex("~/.docmgmt/index.db") as index:
         print(hit.filename, hit.path)
 ```
 
+## GUI (GTK 4 / PyGObject)
+
+Grafische Oberfläche für XFCE (GTK 4, kein libadwaita):
+
+```bash
+pip install -e .
+# PyGObject wird über den Paketmanager installiert, z. B.:
+#   Debian/Ubuntu: sudo apt install python3-gi gir1.2-gtk-4.0
+#   Arch: sudo pacman -S gtk4 python-gobject
+docmgmt-gui            # oder: python -m docmgmt.gui
+```
+
+Fensterstruktur: Toolbar (Suche, Import, Batch-Umbenennung) + Dateiliste +
+Detailbereich. Der Batch-Dialog zeigt pro Datei den Vorschlag mit
+Übernehmen/Verwerfen (Checkbox) und benennt die ausgewählten Dateien auf
+Klick sicher um (Kollisionsschutz). Suche läuft lokal über den SQLite-Index.
+
 ## Tests
 
 ```bash

@@ -37,7 +37,7 @@ nicht auf Veröffentlichung/Support für Dritte.
 | 4 | Suchindex & Suche (SQLite-Volltextindex, schnelles Finden) | geplant (Kernstück) |
 | 5 | Tags & Metadaten (Korrespondent, Datum; sortierte Ansichten) | geplant (Feinheiten, später) |
 | 6 | CLI (`docmgmt scan <ordner>`, `docmgmt rename --dry-run`) | geplant |
-| 7 | GTK-4-GUI (PyGObject) für XFCE | geplant |
+| 7 | GTK-4-GUI (PyGObject) für XFCE | 🟣 in Arbeit (Basis: Toolbar + Dateiliste + Detail, Batch-Dialog, Suche) |
 
 ## Rahmenbedingungen
 

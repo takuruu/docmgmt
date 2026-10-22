@@ -11,6 +11,9 @@ dependencies = [
     "mistralai>=1.0.0",
 ]
 
+[project.scripts]
+docmgmt-gui = "docmgmt.gui:main"
+
 [project.optional-dependencies]
 pdf = ["pypdf>=4.0"]
 docx = ["python-docx>=1.1"]
