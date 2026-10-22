@@ -7,6 +7,7 @@ from typing import List, Optional
 
 from docmgmt.extraction import extract_text
 from docmgmt.index import SearchIndex
+from docmgmt.metadata import DocumentMetadata, extract_metadata
 from docmgmt.namer import DocumentNamer
 from docmgmt.rename import build_target_path
 
@@ -19,6 +20,7 @@ class ImportResult:
     document_id: Optional[int] = None
     renamed: bool = False
     error: Optional[str] = None
+    metadata: Optional[DocumentMetadata] = None
 
 
 class Importer:
@@ -66,8 +68,9 @@ class Importer:
                         destination = candidate
                         result.renamed = True
 
+        result.metadata = extract_metadata(source, self.namer.client)
         result.imported_path = destination
-        result.document_id = self.index.add(destination, text)
+        result.document_id = self.index.add(destination, text, metadata=result.metadata)
         return result
 
     def import_directory(self, directory: Path, target_dir: Optional[Path] = None,
