@@ -24,7 +24,7 @@ nicht auf Veröffentlichung/Support für Dritte.
 5. **Import mit Auto-Umbenennung** – Importfunktion, die Dateien automatisch analysiert, benennt und indexiert
 6. **Tags & Metadaten** – Korrespondent (mit wem), Datum etc. per LLM extrahieren; sortierte Ansichten nach Korrespondent und Datum
 7. **CLI** – praktischer Einstieg für den Alltag (`docmgmt scan <ordner>`)
-8. **GUI** – grafische Oberfläche als GTK-4-App (PyGObject), passend zur XFCE-Desktop-Umgebung; Fensterstruktur: Toolbar + Dateiliste + Detailbereich, erster GUI-Dialog: Batch-Umbenennung (Vorschlag pro Datei, übernehmen/verwerfen, Sammel-Aktion); später Suchleiste und sortierte Ansichten (Korrespondent/Datum)
+8. **GUI** – grafische Oberfläche als Qt-6-App (PySide6), passend zum KDE-Plasma-Desktop; Fensterstruktur: Toolbar + Dateiliste + Detailbereich, erster GUI-Dialog: Batch-Umbenennung (Vorschlag pro Datei, übernehmen/verwerfen, Sammel-Aktion); später Suchleiste und sortierte Ansichten (Korrespondent/Datum)
 
 ## Roadmap (Reihenfolge)
 
@@ -37,11 +37,11 @@ nicht auf Veröffentlichung/Support für Dritte.
 | 4 | Suchindex & Suche (SQLite-Volltextindex, schnelles Finden) | geplant (Kernstück) |
 | 5 | Tags & Metadaten (Korrespondent, Datum; sortierte Ansichten) | 🟣 in Arbeit (Extraktion via Document-Annotation, im Index gespeichert, GUI zeigt sie; sortierte Ansichten folgen) |
 | 6 | CLI (`docmgmt scan <ordner>`, `docmgmt rename --dry-run`) | geplant |
-| 7 | GTK-4-GUI (PyGObject) für XFCE | 🟣 in Arbeit (Basis: Toolbar + Dateiliste + Detail, Batch-Dialog, Suche) |
+| 7 | Qt-6-GUI (PySide6) für KDE Plasma | 🟣 in Arbeit (Basis: Toolbar + Dateiliste + Detail, Batch-Dialog, Suche) |
 
 ## Rahmenbedingungen
 
-- **GUI:** GTK 4 mit PyGObject (XFCE-Desktop; bewusst kein Qt/Tkinter/libadwaita). Die Bibliothek bleibt UI-unabhängig – GUI und CLI sind nur Bedenschichten darüber.
+- **GUI:** Qt 6 mit PySide6 (KDE-Plasma-Desktop; GTK wurde ersetzt, bewusst kein Kirigami/C++). Die Bibliothek bleibt UI-unabhängig – GUI und CLI sind nur Bedenschichten darüber.
 
 ## Nicht-Ziele
 

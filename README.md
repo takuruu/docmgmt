@@ -99,17 +99,19 @@ print(meta.date, meta.correspondent, meta.document_type)
 index.search("rechnung", correspondent="Stadtwerke", date_from="2024-01-01")
 ```
 
-## GUI (GTK 4 / PyGObject)
+## GUI (Qt 6 / PySide6)
 
-Grafische Oberfläche für XFCE (GTK 4, kein libadwaita):
+Grafische Oberfläche für den KDE-Plasma-Desktop (Qt 6, kein GTK):
 
 ```bash
 pip install -e .
-# PyGObject wird über den Paketmanager installiert, z. B.:
-#   Debian/Ubuntu: sudo apt install python3-gi gir1.2-gtk-4.0
-#   Arch: sudo pacman -S gtk4 python-gobject
 docmgmt-gui            # oder: python -m docmgmt.gui
 ```
+
+Auf Plasma übernimmt die App automatisch Breeze-Theme, dunklen Modus und
+Fensterdekoration. PySide6 bringt die Qt-Bibliotheken als Wheels mit;
+systemweit nötige xcb-Bibliotheken kommen unter Debian/Ubuntu mit
+`sudo apt install libxcb-xinerama0` (bei Bedarf).
 
 Fensterstruktur: Toolbar (Suche, Import, Batch-Umbenennung) + Dateiliste +
 Detailbereich. Der Batch-Dialog zeigt pro Datei den Vorschlag mit
