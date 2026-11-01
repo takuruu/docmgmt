@@ -81,6 +81,43 @@ with SearchIndex("~/.docmgmt/index.db") as index:
         print(hit.filename, hit.path)
 ```
 
+## Metadaten: Datum, Korrespondent, Dokumentart
+
+`docmgmt.metadata` extrahiert pro Dokument Datum (ISO), Korrespondenten und
+Dokumentart – für Bilder/PDFs über die Mistral-OCR-Document-Annotation
+(`document_annotation_format`, JSON-Schema), für Textformate über den Chat-
+Endpoint mit JSON-Ausgabe. Der Import speichert die Metadaten im Suchindex,
+der GUI-Detailbereich zeigt sie an:
+
+```python
+from docmgmt.metadata import extract_metadata
+
+meta = extract_metadata(Path("scan001.pdf"), client)
+print(meta.date, meta.correspondent, meta.document_type)
+
+# Suche mit Filter:
+index.search("rechnung", correspondent="Stadtwerke", date_from="2024-01-01")
+```
+
+## GUI (Qt 6 / PySide6)
+
+Grafische Oberfläche für den KDE-Plasma-Desktop (Qt 6, kein GTK):
+
+```bash
+pip install -e .
+docmgmt-gui            # oder: python -m docmgmt.gui
+```
+
+Auf Plasma übernimmt die App automatisch Breeze-Theme, dunklen Modus und
+Fensterdekoration. PySide6 bringt die Qt-Bibliotheken als Wheels mit;
+systemweit nötige xcb-Bibliotheken kommen unter Debian/Ubuntu mit
+`sudo apt install libxcb-xinerama0` (bei Bedarf).
+
+Fensterstruktur: Toolbar (Suche, Import, Batch-Umbenennung) + Dateiliste +
+Detailbereich. Der Batch-Dialog zeigt pro Datei den Vorschlag mit
+Übernehmen/Verwerfen (Checkbox) und benennt die ausgewählten Dateien auf
+Klick sicher um (Kollisionsschutz). Suche läuft lokal über den SQLite-Index.
+
 ## Tests
 
 ```bash

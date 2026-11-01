@@ -9,6 +9,7 @@ from docmgmt.batch import (
 )
 from docmgmt.importer import Importer, ImportResult
 from docmgmt.index import Document, SearchIndex
+from docmgmt.metadata import DocumentMetadata, extract_metadata
 
 __all__ = [
     "DocumentNamer",
@@ -22,4 +23,6 @@ __all__ = [
     "ImportResult",
     "Document",
     "SearchIndex",
+    "DocumentMetadata",
+    "extract_metadata",
 ]

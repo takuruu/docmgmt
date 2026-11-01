@@ -146,3 +146,69 @@ def test_index_reimport_updates(tmp_path):
     assert index.count() == 1
     assert len(index.search("Zweite")) == 1
     assert index.search("Erste") == []
+
+
+class _FakeChat:
+    """Client-Mock mit .chat.complete, wie es extract_metadata erwartet."""
+    def __init__(self, payload):
+        self.payload = payload
+        outer = self
+
+        class Chat:
+            def complete(self, model, messages, response_format=None, **kw):
+                class Msg:
+                    pass
+                msg = Msg()
+                msg.content = outer.payload
+                return type("R", (), {"choices": [type("C", (), {"message": msg})()]})()
+        self.chat = Chat()
+
+
+def test_import_stores_metadata(tmp_path):
+    import json as _json
+    from docmgmt.importer import Importer
+    from docmgmt.namer import DocumentNamer
+    from docmgmt.index import SearchIndex
+
+    src = tmp_path / "scan.txt"
+    src.write_text("Rechnung Stadtwerke 15.03.2024", encoding="utf-8")
+    payload = _json.dumps({"date": "15.03.2024", "correspondent": "Stadtwerke",
+                           "document_type": "rechnung"})
+    namer = DocumentNamer(_FakeChat(payload))
+    with SearchIndex(tmp_path / "idx.db") as index:
+        result = Importer(namer, index).import_file(src, rename=False)
+        assert result.error is None
+        assert result.metadata is not None
+        assert result.metadata.correspondent == "Stadtwerke"
+        assert result.metadata.document_type == "rechnung"
+        doc = index.get(result.imported_path)
+        assert doc.correspondent == "Stadtwerke"
+        assert doc.date == "2024-03-15"
+        hits = index.search("rechnung", correspondent="Stadtwerke")
+        assert len(hits) == 1
+        assert index.all_correspondents() == ["Stadtwerke"]
+
+
+def test_index_migration_from_old_schema(tmp_path):
+    """Index ohne Metadaten-Spalten wird automatisch migriert."""
+    import sqlite3
+    from docmgmt.index import SearchIndex
+
+    db = tmp_path / "old.db"
+    conn = sqlite3.connect(db)
+    conn.execute("CREATE TABLE documents (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                 " path TEXT NOT NULL UNIQUE, filename TEXT NOT NULL,"
+                 " content TEXT NOT NULL,"
+                 " indexed_at TEXT NOT NULL DEFAULT (datetime('now')))")
+    conn.execute("INSERT INTO documents (path, filename, content) VALUES (?, ?, ?)",
+                 (str(tmp_path / "a.txt"), "a.txt", "inhalt alt"))
+    conn.commit()
+    conn.close()
+
+    with SearchIndex(db) as index:
+        docs = index.all_documents()
+        assert len(docs) == 1
+        assert docs[0].correspondent is None
+        index.add(tmp_path / "b.txt", "inhalt neu", date="2024-01-01")
+        doc = index.get(tmp_path / "b.txt")
+        assert doc.date == "2024-01-01"

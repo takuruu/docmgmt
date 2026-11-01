@@ -9,7 +9,11 @@ description = "Dokumentanalyse und automatische Datei-Umbenennung per Mistral-AP
 requires-python = ">=3.9"
 dependencies = [
     "mistralai>=1.0.0",
+    "PySide6>=6.6",
 ]
+
+[project.scripts]
+docmgmt-gui = "docmgmt.gui:main"
 
 [project.optional-dependencies]
 pdf = ["pypdf>=4.0"]
